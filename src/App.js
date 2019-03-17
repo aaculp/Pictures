@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import './App.css';
-import Pictures from './components/Pictures'
+import PictureListings from './components/PictureListings'
 
 class App extends Component {
   state = {
     pictures: [],
+    faves: [],
   }
 
   componentDidMount() {
@@ -19,23 +19,13 @@ class App extends Component {
   }
 
   render() {
-    const allPictures = this.state.pictures.slice(0, 10).map(( pictures ) => {
-      return (
-          <Pictures
-          {...this.props}
-          pictures = { pictures }
-          key = { pictures.id }
-          />
-        )
-    })
     return (
       <div className="App">
-
-        <h1>Showing the Pictures</h1>
-        <div>
-          { allPictures }
-        </div>
-
+        <PictureListings 
+          pictures = {this.state.pictures}
+          faves = {this.state.faves}
+          onFaveToggle={(picture) => this.handleFaveToggle(picture)}
+        />
       </div>
     );
   }
