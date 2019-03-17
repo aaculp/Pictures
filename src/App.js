@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import axios from 'axios'
 import './App.css';
+import Pictures from './components/Pictures'
 
 class App extends Component {
+  state = {
+    pictures: [],
+  }
+
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/photos `)
+      .then((res) => {
+        this.setState(prevState => ({
+          pictures: res.data,
+        }))
+        console.log(this.state.pictures)
+      }).catch(err => console.log(err));
+  }
+
   render() {
+    const allPictures = this.state.pictures.slice(0, 10).map(( pictures ) => {
+      return (
+          <Pictures
+          {...this.props}
+          pictures = { pictures }
+          key = { pictures.id }
+          />
+        )
+    })
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+
+        <h1>Showing the Pictures</h1>
+        <div>
+          { allPictures }
+        </div>
+
       </div>
     );
   }
