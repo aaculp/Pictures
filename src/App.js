@@ -11,20 +11,37 @@ class App extends Component {
   componentDidMount() {
     axios.get(`https://jsonplaceholder.typicode.com/photos `)
       .then((res) => {
-        this.setState(prevState => ({
+        this.setState({
           pictures: res.data,
-        }))
-        console.log(this.state.pictures)
+        })
       }).catch(err => console.log(err));
   }
 
+  handleFaveToggle(picture) {
+    const faves = this.state.faves.slice()
+    const pictureIndex = faves.indexOf(picture)
+
+    if(pictureIndex > -1) {
+      console.log('picture is removed in Favorites')
+      faves.splice(pictureIndex, 1)
+    } else {
+      console.log('picture added to favorites')
+      faves.push(picture)
+    }
+    this.setState({ faves })
+    console.log('this is variable', faves)
+    console.log('this is state', this.state.faves)
+    console.log(pictureIndex)
+  }
+
+
   render() {
     return (
-      <div className="App">
+      <div className="picture-library">
         <PictureListings 
-          pictures = {this.state.pictures}
-          faves = {this.state.faves}
-          onFaveToggle={(picture) => this.handleFaveToggle(picture)}
+          pictures = { this.state.pictures }
+          faves = { this.state.faves }
+          onFaveToggle = {(picture) => this.handleFaveToggle(picture)}
         />
       </div>
     );

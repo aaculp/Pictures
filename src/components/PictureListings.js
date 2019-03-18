@@ -6,36 +6,41 @@ export default class PictureListings extends Component {
         filter: 'all',
     }
 
-      handleFilterClick(filter) {
+    handleFilterClick(filter) {
         console.log('Setting filter to: ', filter)
-        this.setState({filter})
-      }
+        this.setState({ filter })
+    }
 
     render() {
-        let pictures = (this.state.filter === 'faves') ? this.props.faves : this.props.pictures
-        const allPictures = this.props.pictures.slice(0, 10).map(( pictures ) => {
+        let picture = (this.state.filter === 'faves') ? this.props.faves : this.props.pictures
+        
+        const allPictures = picture.slice(0, 20).map(( picture ) => {
             return (
                 <Pictures
-                pictures = { pictures }
-                key = { pictures.id }
+                picture = { picture }
+                key = { picture.id }
+                onFaveToggle = {() => this.props.onFaveToggle(picture)}
+                isFave = {this.props.faves.includes(picture)}
                 />
               )
           })
         return(
-            <div className = 'picture-list'>
-                <h1 className ='section-title'>Pictures</h1>
+            <div>
 
                 <div className = 'picture-list-filters'>
 
-                <div onClick={() => this.handleFilterClick('all')}>ALL
-                <span className="section-count">{allPictures.length}</span>
+                    <div className = {`picture-list-filter ${this.state.filter === 'all' ? 'is-active' : ''}`}
+                        onClick = {() => this.handleFilterClick('all')} > ALL
+                        <span className = "section-count">{this.props.pictures.length}</span>
+                    </div>
+
+                    <div className = {`picture-list-filter ${this.state.filter === 'faves' ? 'is-active' : ''}`}
+                        onClick = {() => this.handleFilterClick('faves')} > FAVES
+                        <span className = "section-count">{this.props.faves.length}</span>
+                    </div>
+
                 </div>
 
-                <div onClick={() => this.handleFilterClick('faves')}>FAVES
-                <span className="section-count">{allPictures.length}</span>
-                </div>
-
-                </div>
                 {allPictures}
             </div>
         )
