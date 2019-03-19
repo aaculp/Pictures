@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import PictureListings from './components/PictureListings'
 
-// import axios from 'axios'
-import { connect } from 'react-redux'
-import { getData } from './store/actions/actions'
+import axios from 'axios'
+// import { connect } from 'react-redux'
+// import { getData, handleFilter, handleToggle } from './store/actions/index'
 
 
-class App extends Component {
+export default class App extends Component {
   state = {
     pictures: [],
     faves: [],
   }
 
-  componentWillMount() {
-    // this.props.getData()
-  }
-  // componentDidMount() {
-  //   axios.get(`https://jsonplaceholder.typicode.com/photos `)
-  //     .then((res) => {
-  //       this.setState({
-  //         pictures: res.data,
-  //       })
-  //     }).catch(err => console.log(err));
+  // componentWillMount() {
+  //   this.props.gettingData()
   // }
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/photos `)
+      .then((res) => {
+        this.setState({
+          pictures: res.data,
+        })
+      }).catch(err => console.log(err));
+  }
 
   handleFaveToggle(picture) {
     const faves = this.state.faves.slice()
@@ -55,4 +55,17 @@ class App extends Component {
   }
 }
 
-export default connect(null, {getData})(App);
+// const mapStateToProps = state => ({
+//   pictures: state.pictures.pictures,
+//   faves: state.faves,
+// })
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     gettingData: () => dispatch(getData()),
+//     toggleFav: (picture) => dispatch(handleToggle(picture)),
+//     toggleFilter: (filter) => dispatch(handleFilter(filter))
+//   }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);

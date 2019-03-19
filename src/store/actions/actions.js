@@ -2,6 +2,7 @@ import { GET_DATA, HANDLE_TOGGLE, HANDLE_FILTER } from './actionTypes'
 import axios from 'axios'
 
 export const getData = () => dispatch => {
+    console.log('getting data')
     axios.get(`https://jsonplaceholder.typicode.com/photos `)
     .then((res) => 
         dispatch({

@@ -4,7 +4,7 @@ import reducer from './reducers/root'
 
 
 const rootReducer = combineReducers({
-    picure: reducer
+    pictures: reducer
 });
 
 const configureStore = () => {
