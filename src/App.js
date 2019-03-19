@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import PictureListings from './components/PictureListings'
+
+// import axios from 'axios'
+import { connect } from 'react-redux'
+import { getData } from './store/actions/actions'
+
 
 class App extends Component {
   state = {
@@ -8,14 +12,17 @@ class App extends Component {
     faves: [],
   }
 
-  componentDidMount() {
-    axios.get(`https://jsonplaceholder.typicode.com/photos `)
-      .then((res) => {
-        this.setState({
-          pictures: res.data,
-        })
-      }).catch(err => console.log(err));
+  componentWillMount() {
+    // this.props.getData()
   }
+  // componentDidMount() {
+  //   axios.get(`https://jsonplaceholder.typicode.com/photos `)
+  //     .then((res) => {
+  //       this.setState({
+  //         pictures: res.data,
+  //       })
+  //     }).catch(err => console.log(err));
+  // }
 
   handleFaveToggle(picture) {
     const faves = this.state.faves.slice()
@@ -48,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, {getData})(App);
